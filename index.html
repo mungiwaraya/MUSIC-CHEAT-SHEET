@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ultimate Music Production Cheat Sheet</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
@@ -760,6 +761,210 @@
     body.light-mode .svg-container svg circle[fill="#0a0c10"] { fill: #ffffff !important; stroke: #db2777 !important; }
     body.light-mode .svg-container svg line { stroke: #cbd5e1 !important; }
 
+    /* Chord Formula Quadrant Matrix */
+    .matrix-wrapper {
+        overflow-x: auto;
+        margin: 2rem 0;
+        padding: 0.5rem;
+    }
+    .matrix-grid {
+        display: grid;
+        grid-template-columns: 140px 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1.25rem;
+        min-width: 600px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .matrix-col-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding-bottom: 0.5rem;
+        text-align: center;
+    }
+    .matrix-header-title {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+        font-weight: 700;
+    }
+    .matrix-row-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        padding-right: 0.5rem;
+        text-align: right;
+    }
+    .matrix-row-title {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    .matrix-header-badge {
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border: 1px solid var(--border-color);
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .matrix-header-badge .semitone-val {
+        font-size: 0.72rem;
+        font-weight: 500;
+        opacity: 0.85;
+    }
+    .matrix-header-badge.m3-badge {
+        background: rgba(236, 72, 153, 0.05);
+        color: var(--accent-pink);
+        border-color: rgba(236, 72, 153, 0.2);
+    }
+    .matrix-header-badge.M3-badge {
+        background: rgba(6, 182, 212, 0.05);
+        color: var(--accent-cyan);
+        border-color: rgba(6, 182, 212, 0.2);
+    }
+
+    .matrix-quadrant {
+        border-radius: 14px;
+        padding: 1.75rem 1.25rem;
+        border: 2px solid var(--border-color);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Quadrant Specific Colors and Glows */
+    .matrix-quadrant.minor-quad {
+        background: linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(6, 182, 212, 0.08) 100%);
+        border-color: rgba(6, 182, 212, 0.25);
+    }
+    .matrix-quadrant.minor-quad:hover {
+        border-color: var(--accent-cyan);
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.25);
+        transform: translateY(-4px);
+    }
+    .matrix-quadrant.minor-quad .quad-name {
+        color: var(--accent-cyan);
+    }
+
+    .matrix-quadrant.major-quad {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, rgba(16, 185, 129, 0.08) 100%);
+        border-color: rgba(16, 185, 129, 0.25);
+    }
+    .matrix-quadrant.major-quad:hover {
+        border-color: var(--accent-green);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+        transform: translateY(-4px);
+    }
+    .matrix-quadrant.major-quad .quad-name {
+        color: var(--accent-green);
+    }
+
+    .matrix-quadrant.dim-quad {
+        background: linear-gradient(135deg, rgba(236, 72, 153, 0.03) 0%, rgba(236, 72, 153, 0.08) 100%);
+        border-color: rgba(236, 72, 153, 0.25);
+    }
+    .matrix-quadrant.dim-quad:hover {
+        border-color: var(--accent-pink);
+        box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
+        transform: translateY(-4px);
+    }
+    .matrix-quadrant.dim-quad .quad-name {
+        color: var(--accent-pink);
+    }
+
+    .matrix-quadrant.aug-quad {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.03) 0%, rgba(245, 158, 11, 0.08) 100%);
+        border-color: rgba(245, 158, 11, 0.25);
+    }
+    .matrix-quadrant.aug-quad:hover {
+        border-color: var(--accent-yellow);
+        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.25);
+        transform: translateY(-4px);
+    }
+    .matrix-quadrant.aug-quad .quad-name {
+        color: var(--accent-yellow);
+    }
+
+    .quad-name {
+        font-size: 1.15rem;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        text-transform: uppercase;
+    }
+    .quad-formula {
+        font-family: monospace;
+        font-weight: 800;
+        font-size: 1.6rem;
+        background: rgba(255,255,255,0.06);
+        padding: 0.25rem 0.75rem;
+        border-radius: 8px;
+        border: 1px dashed rgba(255,255,255,0.1);
+        color: var(--text-main);
+        letter-spacing: 1px;
+    }
+    body.light-mode .quad-formula {
+        background: rgba(0,0,0,0.04);
+        border-color: rgba(0,0,0,0.08);
+    }
+    .quad-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-align: center;
+    }
+    .quad-example {
+        font-size: 0.85rem;
+        font-weight: 700;
+        background: rgba(0,0,0,0.3);
+        padding: 0.3rem 0.6rem;
+        border-radius: 6px;
+        color: #ffffff;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    body.light-mode .quad-example {
+        background: #f1f5f9;
+        color: #0f172a;
+        border-color: #cbd5e1;
+    }
+
+    /* Light mode specific styling overrides */
+    body.light-mode .matrix-quadrant {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        background: #ffffff;
+    }
+    body.light-mode .matrix-quadrant.minor-quad {
+        background: linear-gradient(135deg, rgba(8, 145, 178, 0.02) 0%, rgba(8, 145, 178, 0.05) 100%);
+    }
+    body.light-mode .matrix-quadrant.major-quad {
+        background: linear-gradient(135deg, rgba(5, 150, 105, 0.02) 0%, rgba(5, 150, 105, 0.05) 100%);
+    }
+    body.light-mode .matrix-quadrant.dim-quad {
+        background: linear-gradient(135deg, rgba(219, 39, 119, 0.02) 0%, rgba(219, 39, 119, 0.05) 100%);
+    }
+    body.light-mode .matrix-quadrant.aug-quad {
+        background: linear-gradient(135deg, rgba(180, 83, 9, 0.02) 0%, rgba(180, 83, 9, 0.05) 100%);
+    }
+
+
+
     /* Professional Print Formatting */
     @media print {
         body {
@@ -819,6 +1024,25 @@
         #backToTopBtn {
             display: none !important;
         }
+        .matrix-grid {
+            gap: 10px !important;
+            min-width: 100% !important;
+        }
+        .matrix-quadrant {
+            border: 2px solid #000000 !important;
+            background: #ffffff !important;
+            box-shadow: none !important;
+            page-break-inside: avoid;
+        }
+        .matrix-quadrant * {
+            color: #000000 !important;
+        }
+        .matrix-header-badge {
+            border: 1px solid #000000 !important;
+            background: #ffffff !important;
+            color: #000000 !important;
+        }
+
     }
 
     /* Back to Top Button CSS */
@@ -887,6 +1111,272 @@
             height: 40px;
         }
     }
+
+    /* Semitone Calculator Section */
+    .calculator-wrapper {
+        background: rgba(15, 19, 39, 0.5);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-top: 1rem;
+    }
+    .calc-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+    .control-group {
+        flex: 1;
+        min-width: 140px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .control-group label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .calc-select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: rgba(10, 12, 26, 0.6);
+        color: var(--text-main);
+        padding: 0.85rem 2.75rem 0.85rem 1.25rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        outline: none;
+        transition: var(--transition);
+        font-family: inherit;
+        width: 100%;
+    }
+    #fromNoteSelect {
+        border: 1.5px solid rgba(6, 182, 212, 0.25);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1.25rem center;
+        background-size: 1.1rem;
+    }
+    #fromNoteSelect:hover, #fromNoteSelect:focus {
+        border-color: var(--accent-cyan);
+        box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+    }
+    #toNoteSelect {
+        border: 1.5px solid rgba(236, 72, 153, 0.25);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ec4899' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1.25rem center;
+        background-size: 1.1rem;
+    }
+    #toNoteSelect:hover, #toNoteSelect:focus {
+        border-color: var(--accent-pink);
+        box-shadow: 0 0 15px rgba(236, 72, 153, 0.25);
+    }
+    .calc-select option {
+        background-color: #0f1327;
+        color: #f1f5f9;
+        padding: 0.75rem;
+        font-weight: 600;
+    }
+    body.light-mode #fromNoteSelect {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: var(--text-main);
+        border-color: rgba(6, 182, 212, 0.4);
+    }
+    body.light-mode #toNoteSelect {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: var(--text-main);
+        border-color: rgba(236, 72, 153, 0.4);
+    }
+    body.light-mode .calc-select option {
+        background-color: #ffffff;
+        color: #0f172a;
+    }
+    .calc-direction-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-cyan);
+        background: rgba(6, 182, 212, 0.1);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        margin-top: 1.25rem;
+    }
+    .arrow-icon {
+        animation: pulseArrow 2s infinite ease-in-out;
+    }
+    @keyframes pulseArrow {
+        0%, 100% { transform: translateX(-2px); }
+        50% { transform: translateX(2px); }
+    }
+
+    .path-selector {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 1rem;
+    }
+    .path-label {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+    .path-buttons {
+        display: flex;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 3px;
+    }
+    .path-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    .path-btn:hover {
+        color: var(--text-main);
+    }
+    .path-btn.active {
+        background: var(--accent-cyan);
+        color: #000000;
+        font-weight: 700;
+        box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    }
+
+    .piano-key {
+        cursor: pointer;
+        transition: fill 0.2s ease, stroke 0.2s ease;
+    }
+    .piano-key:hover {
+        opacity: 0.85;
+    }
+
+    .calc-results {
+        display: flex;
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+    .result-badge-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 90px;
+        border-right: 1.5px solid var(--border-color);
+        padding-right: 1.5rem;
+    }
+    @media (max-width: 480px) {
+        .result-badge-container {
+            border-right: none;
+            padding-right: 0;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+    .result-badge {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--accent-pink);
+        text-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+        line-height: 1;
+    }
+    .result-unit {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-top: 0.25rem;
+    }
+    .result-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .result-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.92rem;
+    }
+    .res-lbl {
+        color: var(--text-muted);
+    }
+    .res-val {
+        font-weight: 700;
+        color: var(--text-main);
+    }
+    .highlight-cyan {
+        color: var(--accent-cyan);
+        text-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+    }
+    .highlight-pink {
+        color: var(--accent-pink);
+        text-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+    }
+
+    .step-trail-box {
+        margin-top: 1.25rem;
+        background: rgba(0, 0, 0, 0.15);
+        border: 1px dashed var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+    }
+    .trail-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 0.25rem;
+        letter-spacing: 0.5px;
+    }
+    .trail-content {
+        font-family: monospace;
+        font-size: 0.95rem;
+        color: var(--accent-cyan);
+        word-break: break-all;
+    }
+
+    body.light-mode .calculator-wrapper {
+        background: rgba(15, 23, 42, 0.02);
+    }
+    body.light-mode .calc-select {
+        background: #ffffff;
+        color: var(--text-main);
+    }
+    body.light-mode .path-buttons {
+        background: rgba(0, 0, 0, 0.05);
+    }
+    body.light-mode .calc-results {
+        background: rgba(15, 23, 42, 0.02);
+    }
+    body.light-mode .step-trail-box {
+        background: rgba(15, 23, 42, 0.01);
+    }
 </style>
 </head>
 <body>
@@ -939,15 +1429,18 @@
     <a href="#sec8" class="nav-link"><span class="num">#08</span> Piano Shapes</a>
     <a href="#sec9" class="nav-link"><span class="num">#09</span> Guitar Shapes</a>
     <a href="#sec10" class="nav-link"><span class="num">#10</span> Shortcuts</a>
-    <a href="#sec11" class="nav-link"><span class="num">#11</span> Build Trick</a>
+    <a href="#sec11" class="nav-link"><span class="num">#11</span> Chord Matrix & Build</a>
     <a href="#sec12" class="nav-link"><span class="num">#12</span> Chord Wheel</a>
     <a href="#sec13" class="nav-link"><span class="num">#13</span> Best Pairings</a>
     <a href="#sec14" class="nav-link"><span class="num">#14</span> Circle of Fifths</a>
     <a href="#sec15" class="nav-link"><span class="num">#15</span> BPM Guide</a>
     <a href="#sec16" class="nav-link"><span class="num">#16</span> Compatible Scales</a>
     <a href="#sec17" class="nav-link"><span class="num">#17</span> Emotion Guide</a>
-    <a href="#sec18" class="nav-link"><span class="num">#18</span> Quick Tips</a>
-    <a href="#sec19" class="nav-link"><span class="num">#19</span> Final Advice</a>
+    <a href="#sec18" class="nav-link"><span class="num">#18</span> Scale Notes & Chords</a>
+    <a href="#sec19" class="nav-link"><span class="num">#19</span> Interval Types</a>
+    <a href="#sec20" class="nav-link"><span class="num">#20</span> Semitone Calc</a>
+    <a href="#sec21" class="nav-link"><span class="num">#21</span> Quick Tips</a>
+    <a href="#sec22" class="nav-link"><span class="num">#22</span> Final Advice</a>
 </div>
 
 <div class="container" id="mainContainer">
@@ -1657,21 +2150,21 @@
                     </tr>
                     <tr>
                         <td><strong>4 Flats (Bb, Eb, Ab, Db)</strong></td>
-                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Ab Major</span></td>
+                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Ab Major / G# Major</span></td>
                         <td><span style="color:var(--accent-pink); font-weight:bold;">F Minor</span></td>
                         <td>Ab, Bbm, Cm, Db, Eb, Fm, Gdim</td>
                         <td><span class="chord-badge">C Major (C7)</span></td>
                     </tr>
                     <tr>
                         <td><strong>3 Flats (Bb, Eb, Ab)</strong></td>
-                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Eb Major</span></td>
+                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Eb Major / D# Major</span></td>
                         <td><span style="color:var(--accent-pink); font-weight:bold;">C Minor</span></td>
                         <td>Eb, Fm, Gm, Ab, Bb, Cm, Ddim</td>
                         <td><span class="chord-badge">G Major (G7)</span></td>
                     </tr>
                     <tr>
                         <td><strong>2 Flats (Bb, Eb)</strong></td>
-                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Bb Major</span></td>
+                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Bb Major / A# Major</span></td>
                         <td><span style="color:var(--accent-pink); font-weight:bold;">G Minor</span></td>
                         <td>Bb, Cm, Dm, Eb, F, Gm, Adim</td>
                         <td><span class="chord-badge">D Major (D7)</span></td>
@@ -2418,12 +2911,97 @@
         <div class="section-header">
             <div class="section-title">
                 <span class="sec-badge">SEC 11</span>
-                <h2>Fast Progression Building Trick (4-Step Flowchart)</h2>
+                <h2>Chord Formula Matrix & Progression Building Tricks</h2>
             </div>
         </div>
         <div class="short-notes">
-            <strong>Short Notes:</strong> Build emotionally gripping progressions from scratch in under 2 minutes by following this foolproof four-step harmonic flowchart.
+            <strong>Short Notes:</strong> (A) <strong>Chord Finding Matrix:</strong> Stack thirds (Major = 4 semitones, Minor = 3 semitones) in a 2x2 grid/square to instantly build any Major, Minor, Diminished, or Augmented chord. (B) <strong>Progression Flowchart:</strong> Build progressions from scratch in under 2 minutes.
         </div>
+
+        <!-- Part A: Chord Quadrant Matrix -->
+        <h3 style="margin: 1.5rem 0 1rem; color: var(--accent-cyan); text-transform: uppercase; font-size: 1.25rem; font-weight: 800; border-bottom: 1.5px solid var(--border-color); padding-bottom: 0.5rem;">
+            Part A: Stacking Thirds Quadrant Square (Chord Finding Formula)
+        </h3>
+        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
+            Har triad chord do <strong>Thirds</strong> (intervals) ko stack karke banta hai: pehla interval (Root to 3rd) aur doosra interval (3rd to 5th). In dono intervals ke combinations ko ek square matrix (4 quadrants) mein samajhna sabse aasan formula aur trick hai. Niche diye gaye <strong>Chord Matrix Square</strong> ke hover states aur details se aap kisi bhi root note se chord bana sakte hain:
+        </p>
+
+        <div class="matrix-wrapper">
+            <div class="matrix-grid">
+                <!-- Top-Left Corner (Indicator of Axes) -->
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; background: rgba(255,255,255,0.01); text-align: center;">
+                    <span style="font-size: 0.65rem; text-transform: uppercase; font-weight: 800; color: var(--accent-pink);">Vertical: 2nd Third</span>
+                    <span style="font-size: 0.65rem; text-transform: uppercase; font-weight: 800; color: var(--accent-cyan); margin-top: 0.25rem;">Horizontal: 1st Third</span>
+                </div>
+                <!-- Column Headers (First Interval: Root to 3rd) -->
+                <div class="matrix-col-header">
+                    <span class="matrix-header-title">1st Third (Root ↔ 3rd)</span>
+                    <div class="matrix-header-badge m3-badge">Minor 3rd <span class="semitone-val">(3 Semitones)</span></div>
+                </div>
+                <div class="matrix-col-header">
+                    <span class="matrix-header-title">1st Third (Root ↔ 3rd)</span>
+                    <div class="matrix-header-badge M3-badge">Major 3rd <span class="semitone-val">(4 Semitones)</span></div>
+                </div>
+
+                <!-- Top Row: Second Interval is Major 3rd -->
+                <div class="matrix-row-header">
+                    <span class="matrix-row-title">2nd Third<br>(3rd ↔ 5th)</span>
+                    <div class="matrix-header-badge M3-badge">Major 3rd<br><span class="semitone-val">(4 Semitones)</span></div>
+                </div>
+                <!-- Top-Left Quadrant: Minor Chord -->
+                <div class="matrix-quadrant minor-quad">
+                    <div class="quad-name">Minor (min)</div>
+                    <div class="quad-formula">3 + 4</div>
+                    <div class="quad-desc">Sad, moody, emotional, introspective vibe</div>
+                    <div class="quad-example">Am: A <sup>+3 semitones</sup> → C <sup>+4 semitones</sup> → E</div>
+                </div>
+                <!-- Top-Right Quadrant: Augmented Chord -->
+                <div class="matrix-quadrant aug-quad">
+                    <div class="quad-name">Augmented (aug / +)</div>
+                    <div class="quad-formula">4 + 4</div>
+                    <div class="quad-desc">Dreamy, suspended, mysterious, tense vibe</div>
+                    <div class="quad-example">Caug: C <sup>+4 semitones</sup> → E <sup>+4 semitones</sup> → G#</div>
+                </div>
+
+                <!-- Bottom Row: Second Interval is Minor 3rd -->
+                <div class="matrix-row-header">
+                    <span class="matrix-row-title">2nd Third<br>(3rd ↔ 5th)</span>
+                    <div class="matrix-header-badge m3-badge">Minor 3rd<br><span class="semitone-val">(3 Semitones)</span></div>
+                </div>
+                <!-- Bottom-Left Quadrant: Diminished Chord -->
+                <div class="matrix-quadrant dim-quad">
+                    <div class="quad-name">Diminished (dim / °)</div>
+                    <div class="quad-formula">3 + 3</div>
+                    <div class="quad-desc">Dissonant, dark, scary, suspenseful vibe</div>
+                    <div class="quad-example">Bdim: B <sup>+3 semitones</sup> → D <sup>+3 semitones</sup> → F</div>
+                </div>
+                <!-- Bottom-Right Quadrant: Major Chord -->
+                <div class="matrix-quadrant major-quad">
+                    <div class="quad-name">Major (Maj)</div>
+                    <div class="quad-formula">4 + 3</div>
+                    <div class="quad-desc">Bright, happy, resolved, stable vibe</div>
+                    <div class="quad-example">C: C <sup>+4 semitones</sup> → E <sup>+3 semitones</sup> → G</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="producer-tip-box" style="margin-bottom: 2.5rem;">
+            <div class="icon">💡</div>
+            <div class="content">
+                <h4>Quick Stacking Rule (Hinglish Summary)</h4>
+                <p>
+                    <strong>Triad Chord banana bilkul simple hai:</strong> Root note se count shuru karein. Agar pehle 3 semitones aage jaana hai to use <strong>Minor 3rd</strong> (m3) aur agar 4 semitones aage jaana hai to use <strong>Major 3rd</strong> (M3) kehte hain. 
+                    <br>&bull; <strong>Minor Chord (3+4)</strong> aur <strong>Major Chord (4+3)</strong> dono perfect 5th (7 semitones) par resolve hote hain, isliye ye pleasing lagte hain.
+                    <br>&bull; <strong>Diminished (3+3)</strong> aur <strong>Augmented (4+4)</strong> dissonant aur tense hote hain jo context aur transitions ke liye use kiye jaate hain.
+                </p>
+            </div>
+        </div>
+
+        <!-- Part B: Fast Progression Building Flowchart -->
+        <h3 style="margin: 2.5rem 0 1rem; color: var(--accent-pink); text-transform: uppercase; font-size: 1.25rem; font-weight: 800; border-bottom: 1.5px solid var(--border-color); padding-bottom: 0.5rem;">
+            Part B: Fast Progression Building Flowchart (4-Step Guide)
+        </h3>
+        
         <div class="flowchart">
             <div class="flow-step">
                 <h3>Step 1: Choose Your Anchor: Select Key & Root Chord (I or i)</h3>
@@ -2682,96 +3260,96 @@
         <div class="short-notes">
             <strong>Short Notes:</strong> The Circle of Fifths maps all 12 major and minor keys by fifth intervals clockwise. Neighboring keys differ by only one sharp or flat, ensuring ultra-smooth key changes and chord borrowing.
         </div>
-<div class="svg-container" style="text-align: center; margin: 2rem 0;">
-    <svg viewBox="-220 -220 440 440" width="100%" style="max-width: 420px; font-family: sans-serif; filter: drop-shadow(0 4px 12px rgba(0,240,255,0.15));">
-        <!-- Background Circle -->
-        <circle r="210" fill="#111622" stroke="#1f293d" stroke-width="2"/>
-        <circle r="150" fill="#0c1018" stroke="#1f293d" stroke-width="2"/>
-        <circle r="90" fill="#141b29" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="4 2"/>
-        <circle r="40" fill="#0a0c10" stroke="#ff007f" stroke-width="2"/>
-        
-        <text x="0" y="-5" text-anchor="middle" fill="#00f0ff" font-size="11" font-weight="bold">CIRCLE OF</text>
-        <text x="0" y="10" text-anchor="middle" fill="#ff007f" font-size="11" font-weight="bold">FIFTHS</text>
-    
-        <!-- Slice 0 -->
-        <text x="0.0" y="-175.0" text-anchor="middle" fill="#00f0ff" font-size="15" font-weight="bold">C</text>
-        <text x="0.0" y="-116.0" text-anchor="middle" fill="#a0aec0" font-size="13">Am</text>
-        <text x="0.0" y="-62.0" text-anchor="middle" fill="#ffcc00" font-size="10">0</text>
-        <line x1="23.3" y1="-86.9" x2="54.4" y2="-202.8" stroke="#1f293d" stroke-width="1"/>
+        <div class="svg-container" style="text-align: center; margin: 2rem 0;">
+            <svg viewBox="-220 -220 440 440" width="100%" style="max-width: 420px; font-family: sans-serif; filter: drop-shadow(0 4px 12px rgba(0,240,255,0.15));">
+                <!-- Background Circle -->
+                <circle r="210" fill="#111622" stroke="#1f293d" stroke-width="2"/>
+                <circle r="150" fill="#0c1018" stroke="#1f293d" stroke-width="2"/>
+                <circle r="90" fill="#141b29" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="4 2"/>
+                <circle r="40" fill="#0a0c10" stroke="#ff007f" stroke-width="2"/>
+                
+                <text x="0" y="-5" text-anchor="middle" fill="#00f0ff" font-size="11" font-weight="bold">CIRCLE OF</text>
+                <text x="0" y="10" text-anchor="middle" fill="#ff007f" font-size="11" font-weight="bold">FIFTHS</text>
+            
+                <!-- Slice 0 -->
+                <text x="0.0" y="-175.0" text-anchor="middle" fill="#00f0ff" font-size="15" font-weight="bold">C</text>
+                <text x="0.0" y="-116.0" text-anchor="middle" fill="#a0aec0" font-size="13">Am</text>
+                <text x="0.0" y="-62.0" text-anchor="middle" fill="#ffcc00" font-size="10">0</text>
+                <line x1="23.3" y1="-86.9" x2="54.4" y2="-202.8" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 1 -->
-        <text x="90.0" y="-150.9" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">G</text>
-        <text x="60.0" y="-99.9" text-anchor="middle" fill="#a0aec0" font-size="13">Em</text>
-        <text x="32.5" y="-53.3" text-anchor="middle" fill="#ffcc00" font-size="10">1#</text>
-        <line x1="63.6" y1="-63.6" x2="148.5" y2="-148.5" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 1 -->
+                <text x="90.0" y="-150.9" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">G</text>
+                <text x="60.0" y="-99.9" text-anchor="middle" fill="#a0aec0" font-size="13">Em</text>
+                <text x="32.5" y="-53.3" text-anchor="middle" fill="#ffcc00" font-size="10">1#</text>
+                <line x1="63.6" y1="-63.6" x2="148.5" y2="-148.5" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 2 -->
-        <text x="155.9" y="-85.0" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">D</text>
-        <text x="103.9" y="-56.0" text-anchor="middle" fill="#a0aec0" font-size="13">Bm</text>
-        <text x="56.3" y="-29.5" text-anchor="middle" fill="#ffcc00" font-size="10">2#</text>
-        <line x1="86.9" y1="-23.3" x2="202.8" y2="-54.4" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 2 -->
+                <text x="155.9" y="-85.0" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">D</text>
+                <text x="103.9" y="-56.0" text-anchor="middle" fill="#a0aec0" font-size="13">Bm</text>
+                <text x="56.3" y="-29.5" text-anchor="middle" fill="#ffcc00" font-size="10">2#</text>
+                <line x1="86.9" y1="-23.3" x2="202.8" y2="-54.4" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 3 -->
-        <text x="180.0" y="5.0" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">A</text>
-        <text x="120.0" y="4.0" text-anchor="middle" fill="#a0aec0" font-size="13">F#m</text>
-        <text x="65.0" y="3.0" text-anchor="middle" fill="#ffcc00" font-size="10">3#</text>
-        <line x1="86.9" y1="23.3" x2="202.8" y2="54.4" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 3 -->
+                <text x="180.0" y="5.0" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">A</text>
+                <text x="120.0" y="4.0" text-anchor="middle" fill="#a0aec0" font-size="13">F#m</text>
+                <text x="65.0" y="3.0" text-anchor="middle" fill="#ffcc00" font-size="10">3#</text>
+                <line x1="86.9" y1="23.3" x2="202.8" y2="54.4" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 4 -->
-        <text x="155.9" y="95.0" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">E</text>
-        <text x="103.9" y="64.0" text-anchor="middle" fill="#a0aec0" font-size="13">C#m</text>
-        <text x="56.3" y="35.5" text-anchor="middle" fill="#ffcc00" font-size="10">4#</text>
-        <line x1="63.6" y1="63.6" x2="148.5" y2="148.5" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 4 -->
+                <text x="155.9" y="95.0" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">E</text>
+                <text x="103.9" y="64.0" text-anchor="middle" fill="#a0aec0" font-size="13">C#m</text>
+                <text x="56.3" y="35.5" text-anchor="middle" fill="#ffcc00" font-size="10">4#</text>
+                <line x1="63.6" y1="63.6" x2="148.5" y2="148.5" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 5 -->
-        <text x="90.0" y="160.9" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">B</text>
-        <text x="60.0" y="107.9" text-anchor="middle" fill="#a0aec0" font-size="13">G#m</text>
-        <text x="32.5" y="59.3" text-anchor="middle" fill="#ffcc00" font-size="10">5#</text>
-        <line x1="23.3" y1="86.9" x2="54.4" y2="202.8" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 5 -->
+                <text x="90.0" y="160.9" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">B/Cb</text>
+                <text x="60.0" y="107.9" text-anchor="middle" fill="#a0aec0" font-size="11">G#m/Abm</text>
+                <text x="32.5" y="59.3" text-anchor="middle" fill="#ffcc00" font-size="10">5#</text>
+                <line x1="23.3" y1="86.9" x2="54.4" y2="202.8" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 6 -->
-        <text x="0.0" y="185.0" text-anchor="middle" fill="#39ff14" font-size="15" font-weight="bold">F#</text>
-        <text x="0.0" y="124.0" text-anchor="middle" fill="#a0aec0" font-size="13">D#m</text>
-        <text x="0.0" y="68.0" text-anchor="middle" fill="#ffcc00" font-size="10">6#</text>
-        <line x1="-23.3" y1="86.9" x2="-54.4" y2="202.8" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 6 -->
+                <text x="0.0" y="185.0" text-anchor="middle" fill="#39ff14" font-size="13" font-weight="bold">F#/Gb</text>
+                <text x="0.0" y="124.0" text-anchor="middle" fill="#a0aec0" font-size="11">D#m/Ebm</text>
+                <text x="0.0" y="68.0" text-anchor="middle" fill="#ffcc00" font-size="10">6#</text>
+                <line x1="-23.3" y1="86.9" x2="-54.4" y2="202.8" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 7 -->
-        <text x="-90.0" y="160.9" text-anchor="middle" fill="#ff3366" font-size="15" font-weight="bold">Db</text>
-        <text x="-60.0" y="107.9" text-anchor="middle" fill="#a0aec0" font-size="13">Bbm</text>
-        <text x="-32.5" y="59.3" text-anchor="middle" fill="#ffcc00" font-size="10">5b</text>
-        <line x1="-63.6" y1="63.6" x2="-148.5" y2="148.5" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 7 -->
+                <text x="-90.0" y="160.9" text-anchor="middle" fill="#ff3366" font-size="13" font-weight="bold">Db/C#</text>
+                <text x="-60.0" y="107.9" text-anchor="middle" fill="#a0aec0" font-size="11">Bbm/A#m</text>
+                <text x="-32.5" y="59.3" text-anchor="middle" fill="#ffcc00" font-size="10">5b</text>
+                <line x1="-63.6" y1="63.6" x2="-148.5" y2="148.5" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 8 -->
-        <text x="-155.9" y="95.0" text-anchor="middle" fill="#ff3366" font-size="15" font-weight="bold">Ab</text>
-        <text x="-103.9" y="64.0" text-anchor="middle" fill="#a0aec0" font-size="13">Fm</text>
-        <text x="-56.3" y="35.5" text-anchor="middle" fill="#ffcc00" font-size="10">4b</text>
-        <line x1="-86.9" y1="23.3" x2="-202.8" y2="54.4" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 8 -->
+                <text x="-155.9" y="95.0" text-anchor="middle" fill="#ff3366" font-size="13" font-weight="bold">Ab/G#</text>
+                <text x="-103.9" y="64.0" text-anchor="middle" fill="#a0aec0" font-size="13">Fm</text>
+                <text x="-56.3" y="35.5" text-anchor="middle" fill="#ffcc00" font-size="10">4b</text>
+                <line x1="-86.9" y1="23.3" x2="-202.8" y2="54.4" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 9 -->
-        <text x="-180.0" y="5.0" text-anchor="middle" fill="#ff3366" font-size="15" font-weight="bold">Eb</text>
-        <text x="-120.0" y="4.0" text-anchor="middle" fill="#a0aec0" font-size="13">Cm</text>
-        <text x="-65.0" y="3.0" text-anchor="middle" fill="#ffcc00" font-size="10">3b</text>
-        <line x1="-86.9" y1="-23.3" x2="-202.8" y2="-54.4" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 9 -->
+                <text x="-180.0" y="5.0" text-anchor="middle" fill="#ff3366" font-size="13" font-weight="bold">Eb/D#</text>
+                <text x="-120.0" y="4.0" text-anchor="middle" fill="#a0aec0" font-size="13">Cm</text>
+                <text x="-65.0" y="3.0" text-anchor="middle" fill="#ffcc00" font-size="10">3b</text>
+                <line x1="-86.9" y1="-23.3" x2="-202.8" y2="-54.4" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 10 -->
-        <text x="-155.9" y="-85.0" text-anchor="middle" fill="#ff3366" font-size="15" font-weight="bold">Bb</text>
-        <text x="-103.9" y="-56.0" text-anchor="middle" fill="#a0aec0" font-size="13">Gm</text>
-        <text x="-56.3" y="-29.5" text-anchor="middle" fill="#ffcc00" font-size="10">2b</text>
-        <line x1="-63.6" y1="-63.6" x2="-148.5" y2="-148.5" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 10 -->
+                <text x="-155.9" y="-85.0" text-anchor="middle" fill="#ff3366" font-size="13" font-weight="bold">Bb/A#</text>
+                <text x="-103.9" y="-56.0" text-anchor="middle" fill="#a0aec0" font-size="13">Gm</text>
+                <text x="-56.3" y="-29.5" text-anchor="middle" fill="#ffcc00" font-size="10">2b</text>
+                <line x1="-63.6" y1="-63.6" x2="-148.5" y2="-148.5" stroke="#1f293d" stroke-width="1"/>
 
-        <!-- Slice 11 -->
-        <text x="-90.0" y="-150.9" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">F</text>
-        <text x="-60.0" y="-99.9" text-anchor="middle" fill="#a0aec0" font-size="13">Dm</text>
-        <text x="-32.5" y="-53.3" text-anchor="middle" fill="#ffcc00" font-size="10">1b</text>
-        <line x1="-23.3" y1="-86.9" x2="-54.4" y2="-202.8" stroke="#1f293d" stroke-width="1"/>
+                <!-- Slice 11 -->
+                <text x="-90.0" y="-150.9" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">F</text>
+                <text x="-60.0" y="-99.9" text-anchor="middle" fill="#a0aec0" font-size="13">Dm</text>
+                <text x="-32.5" y="-53.3" text-anchor="middle" fill="#ffcc00" font-size="10">1b</text>
+                <line x1="-23.3" y1="-86.9" x2="-54.4" y2="-202.8" stroke="#1f293d" stroke-width="1"/>
 
-    </svg>
-    <div style="font-size: 0.85rem; color: #a0aec0; margin-top: 0.5rem;">
-        <span style="color: #00f0ff; font-weight: bold;">Outer Ring:</span> Major Keys &nbsp;|&nbsp; 
-        <span style="color: #a0aec0; font-weight: bold;">Middle Ring:</span> Relative Minor Keys &nbsp;|&nbsp; 
-        <span style="color: #ffcc00; font-weight: bold;">Inner Ring:</span> Key Signatures (# / b)
-    </div>
-</div>
+            </svg>
+            <div style="font-size: 0.85rem; color: #a0aec0; margin-top: 0.5rem;">
+                <span style="color: #00f0ff; font-weight: bold;">Outer Ring:</span> Major Keys &nbsp;|&nbsp; 
+                <span style="color: #a0aec0; font-weight: bold;">Middle Ring:</span> Relative Minor Keys &nbsp;|&nbsp; 
+                <span style="color: #ffcc00; font-weight: bold;">Inner Ring:</span> Key Signatures (# / b)
+            </div>
+        </div>
         <div class="table-wrapper" style="margin-top: 2rem;">
             <table>
                 <thead>
@@ -2842,21 +3420,21 @@
                     </tr>
                     <tr>
                         <td><strong>4 Flats</strong></td>
-                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Ab Major</span></td>
+                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Ab Major / G# Major</span></td>
                         <td><span style="color:var(--accent-pink); font-weight:bold;">F Minor</span></td>
                         <td>Bb, Eb, Ab, Db</td>
                         <td><code>Ab – Eb – Db</code></td>
                     </tr>
                     <tr>
                         <td><strong>3 Flats</strong></td>
-                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Eb Major</span></td>
+                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Eb Major / D# Major</span></td>
                         <td><span style="color:var(--accent-pink); font-weight:bold;">C Minor</span></td>
                         <td>Bb, Eb, Ab</td>
                         <td><code>Eb – Bb – Ab</code></td>
                     </tr>
                     <tr>
                         <td><strong>2 Flats</strong></td>
-                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Bb Major</span></td>
+                        <td><span style="color:var(--accent-cyan); font-weight:bold;">Bb Major / A# Major</span></td>
                         <td><span style="color:var(--accent-pink); font-weight:bold;">G Minor</span></td>
                         <td>Bb, Eb</td>
                         <td><code>Bb – F – Eb</code></td>
@@ -3433,6 +4011,484 @@
         <div class="section-header">
             <div class="section-title">
                 <span class="sec-badge">SEC 18</span>
+                <h2>7-Note Diatonic Scales & Chord Breakdown (3 Major + 3 Minor + 1 Diminished)</h2>
+            </div>
+        </div>
+        <div class="short-notes">
+            <strong>Short Notes:</strong> Music theory ke mutabik, har diatonic major scale mein <strong>7 unique notes (keys)</strong> hote hain. In 7 notes par base karke jab hum chords banate hain, toh humesha <strong>3 Major Chords</strong> (I, IV, V), <strong>3 Minor Chords</strong> (ii, iii, vi), aur <strong>1 Diminished Chord</strong> (vii°) nikalte hain. Yahi same rule relative minor keys par bhi apply hota hai.
+        </div>
+        <div class="table-wrapper">
+            <table class="filterable-table">
+                <thead>
+                    <tr>
+                        <th>Scale / Key<br><span style="font-size:0.75rem; font-weight:normal; opacity:0.85;">(Major & Rel. Minor)</span></th>
+                        <th>Scale Notes (7 Keys)</th>
+                        <th>3 Major Chords (I, IV, V)</th>
+                        <th>3 Minor Chords (ii, iii, vi)</th>
+                        <th>1 Diminished Chord (vii°)</th>
+                        <th>Vibe & Theory Insight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>C Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: A Minor</span></td>
+                        <td><code>C</code> <code>D</code> <code>E</code> <code>F</code> <code>G</code> <code>A</code> <code>B</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">G</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Dm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Em</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Am</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bdim</span></td>
+                        <td>Pure diatonic, no sharps/flats. Bright and simple.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>G Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: E Minor</span></td>
+                        <td><code>G</code> <code>A</code> <code>B</code> <code>C</code> <code>D</code> <code>E</code> <code>F#</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">G</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">D</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Am</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Em</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">F#dim</span></td>
+                        <td>Contains 1 sharp (F#). Warm and organic.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>D Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: B Minor</span></td>
+                        <td><code>D</code> <code>E</code> <code>F#</code> <code>G</code> <code>A</code> <code>B</code> <code>C#</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">D</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">G</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">A</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Em</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bm</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">C#dim</span></td>
+                        <td>Contains 2 sharps (F#, C#). Triumphant and energetic.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>A Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: F# Minor</span></td>
+                        <td><code>A</code> <code>B</code> <code>C#</code> <code>D</code> <code>E</code> <code>F#</code> <code>G#</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">A</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">D</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">E</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F#m</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">G#dim</span></td>
+                        <td>Contains 3 sharps (F#, C#, G#). Vibrant and bright.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>E Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: C# Minor</span></td>
+                        <td><code>E</code> <code>F#</code> <code>G#</code> <code>A</code> <code>B</code> <code>C#</code> <code>D#</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">E</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">A</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">B</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">G#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C#m</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">D#dim</span></td>
+                        <td>Contains 4 sharps. Strong, electric resonance.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: G# Minor</span></td>
+                        <td><code>B</code> <code>C#</code> <code>D#</code> <code>E</code> <code>F#</code> <code>G#</code> <code>A#</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">B</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">E</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F#</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">D#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">G#m</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">A#dim</span></td>
+                        <td>Contains 5 sharps. Rich, deep, and glittering.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F# Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: D# Minor</span></td>
+                        <td><code>F#</code> <code>G#</code> <code>A#</code> <code>B</code> <code>C#</code> <code>D#</code> <code>E#</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F#</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">B</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C#</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">G#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">A#m</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">D#m</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">E#dim</span></td>
+                        <td>Contains 6 sharps (includes E#). Extremely bright.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Db Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: Bb Minor</span></td>
+                        <td><code>Db</code> <code>Eb</code> <code>F</code> <code>Gb</code> <code>Ab</code> <code>Bb</code> <code>C</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Db</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Gb</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Ab</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Ebm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Fm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bbm</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Cdim</span></td>
+                        <td>Contains 5 flats. Mellow, warm, and romantic.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ab Major / G# Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: Fm Minor</span></td>
+                        <td><code>Ab</code> <code>Bb</code> <code>C</code> <code>Db</code> <code>Eb</code> <code>F</code> <code>G</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Ab</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Db</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Eb</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bbm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Cm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Fm</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Gdim</span></td>
+                        <td>Contains 4 flats. Soulful, warm, and deep.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eb Major / D# Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: C Minor</span></td>
+                        <td><code>Eb</code> <code>F</code> <code>G</code> <code>Ab</code> <code>Bb</code> <code>C</code> <code>D</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Eb</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Ab</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bb</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Fm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Gm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Cm</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Ddim</span></td>
+                        <td>Contains 3 flats. Majestic, bold, and heroic.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bb Major / A# Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: G Minor</span></td>
+                        <td><code>Bb</code> <code>C</code> <code>D</code> <code>Eb</code> <code>F</code> <code>G</code> <code>A</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bb</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Eb</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Cm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Dm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Gm</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Adim</span></td>
+                        <td>Contains 2 flats. Smooth, classic, and groovy.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F Major</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">Rel: D Minor</span></td>
+                        <td><code>F</code> <code>G</code> <code>A</code> <code>Bb</code> <code>C</code> <code>D</code> <code>E</code></td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">F</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Bb</span>
+                            <span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">C</span>
+                        </td>
+                        <td>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Gm</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Am</span>
+                            <span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.3); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Dm</span>
+                        </td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Edim</span></td>
+                        <td>Contains 1 flat (Bb). Gentle, classic, slightly nostalgic.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="producer-tip-box">
+            <div class="icon">💡</div>
+            <div class="content">
+                <h4>Scale Degrees & Diatonic Pattern Theory</h4>
+                <p>
+                    Har Major Scale ka structural chord pattern humesha <strong>I (Major) – ii (Minor) – iii (Minor) – IV (Major) – V (Major) – vi (Minor) – vii° (Diminished)</strong> hota hai. 
+                    <br>&bull; <strong>Chords I, IV, aur V</strong> humesha Major hote hain. Inhe play karne se loop ko absolute stability milti hai.
+                    <br>&bull; <strong>Chords ii, iii, aur vi</strong> humesha Minor hote hain jo melodic emotion lane ke kaam aate hain.
+                    <br>&bull; <strong>Chord vii°</strong> (diminished chord) scale notes se direct build hota hai par tension create karta hai, isliye general pop ya electronic music mein iski jagah V7 ya direct V use kiya jata hai.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 19 -->
+    <div class="section-card" id="sec19">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="sec-badge">SEC 19</span>
+                <h2>Interval Types & Music Theory Formula Chart</h2>
+            </div>
+        </div>
+        <div class="short-notes">
+            <strong>Short Notes:</strong> Music theory mein, do notes ke beech ke distance ko <strong>Interval</strong> kehte hain. Yeh chords aur melodies ke building blocks hain. Major aur Minor chords isi interval combinations se bante hain (jaise Major Chord = Root + M3 + P5, aur Minor Chord = Root + m3 + P5).
+        </div>
+        <div class="table-wrapper">
+            <table class="filterable-table">
+                <thead>
+                    <tr>
+                        <th style="width: 110px;">Semitones</th>
+                        <th style="width: 130px;">Name & Abbr.</th>
+                        <th style="width: 100px;">Distance</th>
+                        <th style="width: 100px;">Example (from C)</th>
+                        <th style="width: 250px;">Emotional Vibe / Character</th>
+                        <th>Famous Song Memory Shortcut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>0 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Perfect Unison (P1)</span></td>
+                        <td>0 steps</td>
+                        <td><code>C ↔ C</code></td>
+                        <td>Pure stability, single voice duplication.</td>
+                        <td>Identical note unison singing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1 Semitone</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(239, 68, 68, 0.1); color: var(--accent-pink); border-color: rgba(239, 68, 68, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Minor 2nd (m2)</span></td>
+                        <td>0.5 step (Half-step)</td>
+                        <td><code>C ↔ Db</code></td>
+                        <td style="color: var(--accent-pink);">Extremely tense, dark, suspenseful, warning sound.</td>
+                        <td><strong>Jaws Theme</strong> (dun-dun...), Mission Impossible (intro)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Major 2nd (M2)</span></td>
+                        <td>1 step (Whole step)</td>
+                        <td><code>C ↔ D</code></td>
+                        <td>Mildly tense, stepwise motion, needs resolution.</td>
+                        <td><strong>Happy Birthday</strong> ("Ha-ppy"), Silent Night ("Si-lent")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Minor 3rd (m3)</span></td>
+                        <td>1.5 steps</td>
+                        <td><code>C ↔ Eb</code></td>
+                        <td style="color: var(--accent-cyan);">Sad, emotional, dark, minor scale builder.</td>
+                        <td><strong>Greensleeves</strong>, Brahms' Lullaby</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Major 3rd (M3)</span></td>
+                        <td>2 steps</td>
+                        <td><code>C ↔ E</code></td>
+                        <td style="color: var(--accent-green);">Happy, bright, highly stable, major scale builder.</td>
+                        <td><strong>Oh When the Saints</strong> ("Oh when..."), Kumbaya</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Perfect 4th (P4)</span></td>
+                        <td>2.5 steps</td>
+                        <td><code>C ↔ F</code></td>
+                        <td>Hollow, suspended, neutral, wants to resolve to 3rd.</td>
+                        <td><strong>Here Comes the Bride</strong>, Amazing Grace ("A-ma-")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6 Semitones</strong></td>
+                        <td><span class="avoid-badge" style="padding: 0.15rem 0.35rem; font-size: 0.78rem;">Tritone (d5/A4)</span></td>
+                        <td>3 steps (Tritone)</td>
+                        <td><code>C ↔ F# / Gb</code></td>
+                        <td style="color: var(--accent-pink);">"Diabolus in Musica" (Devil's interval). Extremely tense, evil, dissonant.</td>
+                        <td><strong>The Simpsons Theme</strong> (intro), Jimi Hendrix's Purple Haze</td>
+                    </tr>
+                    <tr>
+                        <td><strong>7 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Perfect 5th (P5)</span></td>
+                        <td>3.5 steps</td>
+                        <td><code>C ↔ G</code></td>
+                        <td style="color: var(--accent-green);">Power chord fundamental, heroic, hollow, extremely stable.</td>
+                        <td><strong>Star Wars Theme</strong> (main interval), Twinkle Twinkle</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Minor 6th (m6)</span></td>
+                        <td>4 steps</td>
+                        <td><code>C ↔ Ab</code></td>
+                        <td>Melancholic, weeping, emotional, dramatic rise.</td>
+                        <td><strong>Love Story Theme</strong>, Enter Sandman (main riff harmony)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>9 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Major 6th (M6)</span></td>
+                        <td>4.5 steps</td>
+                        <td><code>C ↔ A</code></td>
+                        <td>Nostalgic, sweet, hopeful, jazzy warmth.</td>
+                        <td><strong>NBC Chimes</strong>, My Way (start "And now...")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(6, 182, 212, 0.1); color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Minor 7th (m7)</span></td>
+                        <td>5 steps</td>
+                        <td><code>C ↔ Bb</code></td>
+                        <td>Mellow, jazzy, bluesy, searching, dominant chord builder.</td>
+                        <td><strong>Somewhere</strong> (West Side Story "There's a..."), Star Trek Theme</td>
+                    </tr>
+                    <tr>
+                        <td><strong>11 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-yellow); border-color: rgba(245, 158, 11, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Major 7th (M7)</span></td>
+                        <td>5.5 steps</td>
+                        <td><code>C ↔ B</code></td>
+                        <td>Beautifully dissonant, dreamy, nostalgic, romantic, lofi vibe.</td>
+                        <td><strong>Take On Me</strong> (chorus "Take-"), Superman Theme</td>
+                    </tr>
+                    <tr>
+                        <td><strong>12 Semitones</strong></td>
+                        <td><span class="chord-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.2); padding: 0.15rem 0.35rem; font-size: 0.78rem;">Perfect Octave (P8)</span></td>
+                        <td>6 steps</td>
+                        <td><code>C ↔ C</code></td>
+                        <td style="color: var(--accent-green);">Complete frequency duplication, bright, spacious.</td>
+                        <td><strong>Somewhere Over the Rainbow</strong> ("Some-where")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="producer-tip-box">
+            <div class="icon">💡</div>
+            <div class="content">
+                <h4>Producer Hack: Chord building with Intervals</h4>
+                <p>
+                    Apne synth ya piano par chord build karte waqt intervals ka direct formula yaad rakhein:
+                    <br>&bull; <strong>Major Chord:</strong> Root note press karein, uske +4 semitones aage (Major 3rd) aur +7 semitones aage (Perfect 5th) press karein. [Formula: 0 - 4 - 7]
+                    <br>&bull; <strong>Minor Chord:</strong> Root note press karein, uske +3 semitones aage (Minor 3rd) aur +7 semitones aage (Perfect 5th) press karein. [Formula: 0 - 3 - 7]
+                    <br>&bull; <strong>Diminished Chord:</strong> Root note press karein, uske +3 semitones aage (Minor 3rd) aur +6 semitones aage (Tritone) press karein. [Formula: 0 - 3 - 6]
+                    <br>&bull; <strong>Augmented Chord:</strong> Root note press karein, uske +4 semitones aage (Major 3rd) aur +8 semitones aage (Minor 6th/Aug 5th) press karein. [Formula: 0 - 4 - 8]
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 20 -->
+    <div class="section-card" id="sec20">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="sec-badge">SEC 20</span>
+                <h2>Interactive Semitone Distance Calculator</h2>
+            </div>
+        </div>
+        <div class="short-notes">
+            <strong>Short Notes:</strong> Select a starting note (FROM) and a target note (TO) to find the exact semitone shift required for transposing. Supports DAW-friendly sharp/flat naming, identifies intervals, and visualizes the keyboard path.
+        </div>
+        <div class="calculator-wrapper">
+            <div class="calc-controls">
+                <div class="control-group">
+                    <label for="fromNoteSelect">Start Note (FROM)</label>
+                    <select id="fromNoteSelect" class="calc-select" onchange="calculateSemitones()">
+                    </select>
+                </div>
+                <div class="calc-direction-indicator">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="control-group">
+                    <label for="toNoteSelect">Target Note (TO)</label>
+                    <select id="toNoteSelect" class="calc-select" onchange="calculateSemitones()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="path-selector">
+                <span class="path-label">Calculation Mode:</span>
+                <div class="path-buttons">
+                    <button id="mode-shortest" class="path-btn active" onclick="setCalcMode('shortest')">Shortest Route</button>
+                    <button id="mode-up" class="path-btn" onclick="setCalcMode('up')">Upward Only (+)</button>
+                    <button id="mode-down" class="path-btn" onclick="setCalcMode('down')">Downward Only (-)</button>
+                </div>
+            </div>
+
+            <div class="keyboard-container" style="overflow-x: auto; padding: 1rem 0;">
+                <svg viewBox="0 0 420 150" width="100%" style="max-width: 420px; display: block; margin: 0 auto;">
+                    <rect id="key-0" class="piano-key white-key" x="0" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(0)"/>
+                    <rect id="key-2" class="piano-key white-key" x="60" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(2)"/>
+                    <rect id="key-4" class="piano-key white-key" x="120" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(4)"/>
+                    <rect id="key-5" class="piano-key white-key" x="180" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(5)"/>
+                    <rect id="key-7" class="piano-key white-key" x="240" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(7)"/>
+                    <rect id="key-9" class="piano-key white-key" x="300" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(9)"/>
+                    <rect id="key-11" class="piano-key white-key" x="360" y="5" width="60" height="140" rx="4" fill="#ffffff" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(11)"/>
+                    
+                    <text x="30" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">C</text>
+                    <text x="90" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">D</text>
+                    <text x="150" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">E</text>
+                    <text x="210" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">F</text>
+                    <text x="270" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">G</text>
+                    <text x="330" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">A</text>
+                    <text x="390" y="132" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold" pointer-events="none">B</text>
+
+                    <rect id="key-1" class="piano-key black-key" x="43" y="5" width="34" height="85" rx="3" fill="#111322" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(1)"/>
+                    <rect id="key-3" class="piano-key black-key" x="103" y="5" width="34" height="85" rx="3" fill="#111322" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(3)"/>
+                    <rect id="key-6" class="piano-key black-key" x="223" y="5" width="34" height="85" rx="3" fill="#111322" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(6)"/>
+                    <rect id="key-8" class="piano-key black-key" x="283" y="5" width="34" height="85" rx="3" fill="#111322" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(8)"/>
+                    <rect id="key-10" class="piano-key black-key" x="343" y="5" width="34" height="85" rx="3" fill="#111322" stroke="#1f293d" stroke-width="1.5" onclick="selectKeyDirectly(10)"/>
+
+                    <text x="60" y="55" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold" pointer-events="none">C#</text>
+                    <text x="120" y="55" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold" pointer-events="none">D#</text>
+                    <text x="240" y="55" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold" pointer-events="none">F#</text>
+                    <text x="300" y="55" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold" pointer-events="none">G#</text>
+                    <text x="360" y="55" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold" pointer-events="none">A#</text>
+                </svg>
+            </div>
+
+            <div class="calc-results">
+                <div class="result-badge-container">
+                    <div id="resultSemitones" class="result-badge">+7</div>
+                    <div class="result-unit">Semitones</div>
+                </div>
+                <div class="result-details">
+                    <div class="result-row">
+                        <span class="res-lbl">Direction:</span>
+                        <span id="resultDirection" class="res-val highlight-cyan">Transpose UP</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="res-lbl">Music Interval:</span>
+                        <span id="resultInterval" class="res-val highlight-pink">Perfect 5th</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="res-lbl">Alternative Option:</span>
+                        <span id="resultAlternative" class="res-val">-5 Semitones (Transpose DOWN)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-trail-box">
+                <div class="trail-title">Visual Note Trail:</div>
+                <div id="noteTrail" class="trail-content">C → C# → D → D# → E → F → F# → G</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 21 -->
+    <div class="section-card" id="sec21">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="sec-badge">SEC 21</span>
                 <h2>Producer Quick Tips (72 Ultra-Short Golden Studio Rules)</h2>
             </div>
         </div>
@@ -3947,11 +5003,11 @@
         </div>
     </div>
 
-    <!-- Section 19 -->
-    <div class="section-card" id="sec19" style="page-break-before: always;">
+    <!-- Section 22 -->
+    <div class="section-card" id="sec22" style="page-break-before: always;">
         <div class="section-header">
             <div class="section-title">
-                <span class="sec-badge">SEC 19</span>
+                <span class="sec-badge">SEC 22</span>
                 <h2>Final Advice (Studio Manifesto & Golden Rules)</h2>
             </div>
         </div>
@@ -3982,9 +5038,229 @@
         </div>
     </div>
 
+
+
 </div>
 
 <script>
+    // Semitone Calculator Variables
+    const calcNotes = [
+        { name: 'C / Am', val: 0 },
+        { name: 'C# / Db (A#m / Bbm)', val: 1 },
+        { name: 'D / Bm', val: 2 },
+        { name: 'Eb / D# (Cm)', val: 3 },
+        { name: 'E / C#m', val: 4 },
+        { name: 'F / Dm', val: 5 },
+        { name: 'F# / Gb (D#m / Ebm)', val: 6 },
+        { name: 'G / Em', val: 7 },
+        { name: 'Ab / G# (Fm)', val: 8 },
+        { name: 'A / F#m', val: 9 },
+        { name: 'Bb / A# (Gm)', val: 10 },
+        { name: 'B / G#m', val: 11 }
+    ];
+
+    const calcIntervals = {
+        0: 'Perfect Unison (Same Note)',
+        1: 'Minor 2nd (Half Step)',
+        2: 'Major 2nd (Whole Step)',
+        3: 'Minor 3rd',
+        4: 'Major 3rd',
+        5: 'Perfect 4th',
+        6: 'Tritone / Diminished 5th',
+        7: 'Perfect 5th',
+        8: 'Minor 6th',
+        9: 'Major 6th',
+        10: 'Minor 7th',
+        11: 'Major 7th'
+    };
+
+    let calcMode = 'shortest'; // 'shortest', 'up', 'down'
+    let clickSelectState = 'from'; // 'from', 'to'
+
+    function initCalculator() {
+        const fromSelect = document.getElementById('fromNoteSelect');
+        const toSelect = document.getElementById('toNoteSelect');
+        
+        if (!fromSelect || !toSelect) return;
+        
+        fromSelect.innerHTML = '';
+        toSelect.innerHTML = '';
+        
+        calcNotes.forEach((note, index) => {
+            const opt1 = document.createElement('option');
+            opt1.value = index;
+            opt1.textContent = note.name;
+            if (index === 0) opt1.selected = true; // C
+            fromSelect.appendChild(opt1);
+            
+            const opt2 = document.createElement('option');
+            opt2.value = index;
+            opt2.textContent = note.name;
+            if (index === 7) opt2.selected = true; // G
+            toSelect.appendChild(opt2);
+        });
+
+        calculateSemitones();
+    }
+
+    function setCalcMode(mode) {
+        calcMode = mode;
+        document.querySelectorAll('.path-buttons .path-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById(`mode-${mode}`).classList.add('active');
+        calculateSemitones();
+    }
+
+    function selectKeyDirectly(keyVal) {
+        const fromSelect = document.getElementById('fromNoteSelect');
+        const toSelect = document.getElementById('toNoteSelect');
+        
+        if (clickSelectState === 'from') {
+            fromSelect.value = keyVal;
+            clickSelectState = 'to';
+        } else {
+            toSelect.value = keyVal;
+            clickSelectState = 'from';
+        }
+        calculateSemitones();
+    }
+
+    function calculateSemitones() {
+        const fromVal = document.getElementById('fromNoteSelect');
+        const toVal = document.getElementById('toNoteSelect');
+        if (!fromVal || !toVal) return;
+
+        const fromIdx = parseInt(fromVal.value);
+        const toIdx = parseInt(toVal.value);
+        
+        let upDiff = (toIdx - fromIdx + 12) % 12;
+        let downDiff = (toIdx - fromIdx - 12) % 12;
+        if (downDiff === 0 && fromIdx !== toIdx) downDiff = -12;
+        
+        let finalDiff = 0;
+        let direction = '';
+        
+        if (fromIdx === toIdx) {
+            finalDiff = 0;
+            direction = 'No Transposition Required';
+        } else if (calcMode === 'up') {
+            finalDiff = upDiff;
+            direction = 'Transpose UP';
+        } else if (calcMode === 'down') {
+            finalDiff = downDiff;
+            direction = 'Transpose DOWN';
+        } else {
+            if (upDiff <= 6) {
+                finalDiff = upDiff;
+                direction = 'Transpose UP';
+            } else {
+                finalDiff = downDiff;
+                direction = 'Transpose DOWN';
+            }
+        }
+
+        const badge = document.getElementById('resultSemitones');
+        if (badge) {
+            const formattedDiff = finalDiff >= 0 ? `+${finalDiff}` : `${finalDiff}`;
+            badge.textContent = formattedDiff;
+            
+            const dirEl = document.getElementById('resultDirection');
+            if (dirEl) {
+                dirEl.textContent = direction;
+                if (finalDiff > 0) {
+                    dirEl.className = 'res-val highlight-cyan';
+                    badge.style.color = 'var(--accent-cyan)';
+                    badge.style.textShadow = '0 0 15px rgba(6, 182, 212, 0.4)';
+                } else if (finalDiff < 0) {
+                    dirEl.className = 'res-val highlight-pink';
+                    badge.style.color = 'var(--accent-pink)';
+                    badge.style.textShadow = '0 0 15px rgba(236, 72, 153, 0.4)';
+                } else {
+                    dirEl.className = 'res-val';
+                    badge.style.color = 'var(--text-muted)';
+                    badge.style.textShadow = 'none';
+                }
+            }
+
+            const intervalEl = document.getElementById('resultInterval');
+            if (intervalEl) {
+                intervalEl.textContent = calcIntervals[Math.abs(finalDiff) % 12];
+            }
+
+            const altEl = document.getElementById('resultAlternative');
+            if (altEl) {
+                if (fromIdx === toIdx) {
+                    altEl.textContent = 'Same pitch';
+                } else {
+                    const upAlt = `+${upDiff} Semitones (UP)`;
+                    const downAlt = `${downDiff} Semitones (DOWN)`;
+                    altEl.textContent = finalDiff === upDiff ? `${downAlt}` : `${upAlt}`;
+                }
+            }
+
+            updateKeyboardVisuals(fromIdx, toIdx, finalDiff);
+        }
+    }
+
+    function updateKeyboardVisuals(fromIdx, toIdx, finalDiff) {
+        for (let i = 0; i < 12; i++) {
+            const keyEl = document.getElementById(`key-${i}`);
+            if (!keyEl) continue;
+            
+            const isWhite = keyEl.classList.contains('white-key');
+            keyEl.setAttribute('fill', isWhite ? '#ffffff' : '#111322');
+            keyEl.setAttribute('stroke', '#1f293d');
+        }
+
+        const fromEl = document.getElementById(`key-${fromIdx}`);
+        if (fromEl) {
+            fromEl.setAttribute('fill', '#00f0ff');
+            fromEl.setAttribute('stroke', '#00f0ff');
+        }
+
+        const toEl = document.getElementById(`key-${toIdx}`);
+        if (toEl) {
+            toEl.setAttribute('fill', '#ff007f');
+            toEl.setAttribute('stroke', '#ff007f');
+        }
+
+        let trail = [];
+        let pathKeys = [];
+        
+        if (fromIdx === toIdx) {
+            trail.push(calcNotes[fromIdx].name.split(' ')[0]);
+        } else {
+            let curr = fromIdx;
+            const step = finalDiff > 0 ? 1 : -1;
+            const limit = Math.abs(finalDiff);
+            
+            trail.push(calcNotes[fromIdx].name.split(' ')[0]);
+            for (let s = 1; s <= limit; s++) {
+                curr = (curr + step + 12) % 12;
+                const noteName = calcNotes[curr].name.split(' ')[0];
+                trail.push(noteName);
+                
+                if (curr !== toIdx) {
+                    pathKeys.push(curr);
+                }
+            }
+        }
+        
+        pathKeys.forEach(k => {
+            const el = document.getElementById(`key-${k}`);
+            if (el) {
+                el.setAttribute('fill', '#1a2238');
+                el.setAttribute('stroke', '#334155');
+            }
+        });
+
+        const trailEl = document.getElementById('noteTrail');
+        if (trailEl) {
+            trailEl.textContent = trail.join(' → ');
+        }
+    }
+
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
         const btn = document.getElementById('themeBtn');
@@ -4156,6 +5432,9 @@
             }
         }, 800);
     }
+
+    // Initialize Semitone Calculator on load
+    initCalculator();
 </script>
 
 <!-- Floating Back to Top Button -->
